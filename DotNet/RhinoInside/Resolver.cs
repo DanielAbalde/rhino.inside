@@ -7,7 +7,7 @@ namespace RhinoInside
   {
     /// <summary>
     /// Set up an assembly resolver to load RhinoCommon and other Rhino
-    /// assemblies from where Rhino is installed
+    /// and Grasshopper assemblies from where Rhino is installed
     /// </summary>
     public static void Initialize()
     {
@@ -48,6 +48,13 @@ namespace RhinoInside
       string path = System.IO.Path.Combine(RhinoSystemDirectory, assemblyName + ".dll");
       if (System.IO.File.Exists(path))
         return Assembly.LoadFrom(path);
+
+      if (assemblyName.Equals("Grasshopper") || assemblyName.Contains("GH_IO"))
+      {
+        path = System.IO.Path.Combine(System.IO.Directory.GetParent(RhinoSystemDirectory).FullName, "Plug-ins", "Grasshopper", assemblyName + ".dll");
+        if (System.IO.File.Exists(path))
+          return Assembly.LoadFrom(path);
+      }
 
       return null;
     }
