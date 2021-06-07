@@ -13,6 +13,7 @@ namespace RhinoInside
     {
       if (System.IntPtr.Size != 8)
         throw new Exception("Only 64 bit applications can use RhinoInside");
+      AppDomain.CurrentDomain.AssemblyResolve -= ResolveForRhinoAssemblies;
       AppDomain.CurrentDomain.AssemblyResolve += ResolveForRhinoAssemblies;
     }
 
